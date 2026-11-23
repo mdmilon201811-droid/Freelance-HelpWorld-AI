@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelance HelpWorld AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101827;color:#fff}
+header{background:#17243a;padding:18px;text-align:center}
+header h1{color:#45d6c5;margin:5px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:12px;background:#202f46}
+button{background:#16a995;color:white;border:0;padding:12px 16px;border-radius:8px;cursor:pointer}
+button:hover{opacity:.85}
+main{max-width:950px;margin:auto;padding:18px}
+.card{background:#1c2a40;padding:20px;margin:15px 0;border-radius:12px;border:1px solid #344963}
+h2{color:#45d6c5}
+input,select,textarea{width:100%;padding:12px;margin:8px 0;background:#101827;color:white;border:1px solid #53657c;border-radius:7px}
+section{display:none}
+section.active{display:block}
+.small{color:#b7c5d8;font-size:13px}
+footer{text-align:center;padding:25px;color:#aab8cc}
+</style>
+</head>
+<body>
+<header>
+<h1>🌍 Freelance HelpWorld AI</h1>
+<p>One World. One Freelancing Platform.</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('login')">Login</button>
+<button onclick="show('register')">Register</button>
+<button onclick="show('jobs')">Find Work</button>
+<button onclick="show('advertise')">Advertise</button>
+<button onclick="show('dashboard')">Dashboard</button>
+</nav>
+
+<main>
+<section id="home" class="active">
+<div class="card">
+<h2>Welcome to HelpWorld AI</h2>
+<p>A global platform connecting freelancers, clients and advertisers.</p>
+<button onclick="show('register')">Join Now</button>
+<button onclick="show('jobs')">Explore Work</button>
+</div>
+<div class="card">
+<h2>Our Services</h2>
+<p>🌐 Freelance Marketplace</p>
+<p>🤖 AI Freelancing Assistance</p>
+<p>📋 Tasks and Projects</p>
+<p>📢 Advertising Management</p>
+<p>💼 Client and Freelancer Dashboard</p>
+<p>💳 Future Payment Integration</p>
+</div>
+</section>
+
+<section id="register">
+<div class="card">
+<h2>Create Account</h2>
+<input id="regname" placeholder="Full Name">
+<input id="regemail" type="email" placeholder="Email Address">
+<input id="regpass" type="password" placeholder="Create Password">
+<select id="regrole">
+<option value="freelancer">Freelancer</option>
+<option value="client">Client</option>
+<option value="advertiser">Advertiser</option>
+</select>
+<button onclick="register()">Create Account</button>
+<p id="regmsg"></p>
+<p class="small">Demo registration only. Do not use a real password.</p>
+</div>
+</section>
+
+<section id="login">
+<div class="card">
+<h2>Login</h2>
+<input id="loginemail" type="email" placeholder="Email Address">
+<input id="loginpass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="loginmsg"></p>
+</div>
+</section>
+
+<section id="jobs">
+<div class="card">
+<h2>Freelance Marketplace</h2>
+<input id="jobsearch" placeholder="Search jobs or skills">
+<button onclick="searchJobs()">Search</button>
+<div id="jobresults">
+<p>Web Design — Sample Project</p>
+<p>Data Entry — Sample Project</p>
+<p>Graphic Design — Sample Project</p>
+<p>Translation — Sample Project</p>
+<p>Virtual Assistant — Sample Project</p>
+</div>
+<p class="small">Sample listings only. No real client jobs are connected yet.</p>
+</div>
+</section>
+
+<section id="advertise">
+<div class="card">
+<h2>Advertise With Us</h2>
+<input id="adname" placeholder="Company / Advertiser Name">
+<input id="ademail" type="email" placeholder="Business Email">
+<textarea id="adtext" placeholder="Describe your advertisement"></textarea>
+<select id="adbudget">
+<option value="">Select advertising budget</option>
+<option>$10 - $50</option>
+<option>$50 - $100</option>
+<option>$100 - $500</option>
+<option>$500+</option>
+</select>
+<button onclick="submitAd()">Submit Advertising Request</button>
+<p id="admsg"></p>
+<p class="small">Demo request only. No advertising payment is collected.</p>
+</div>
+</section>
+
+<section id="dashboard">
+<div class="card">
+<h2>User Dashboard</h2>
+<p id="welcome">Please login to view your demo account.</p>
+<p>Account Type: <span id="role">Guest</span></p>
+<p>Account Status: Demo</p>
+<button onclick="show('jobs')">Explore Projects</button>
+<button onclick="logout()">Logout</button>
+</div>
+<div class="card">
+<h2>Admin Dashboard Preview</h2>
+<p>Manage users, projects, advertising requests and platform activity.</p>
+<p>Registered users: <span id="users">0</span></p>
+<p>Advertising requests: <span id="ads">0</span></p>
+<p class="small">Admin controls require a secure server and administrator authentication before launch.</p>
+</div>
+</section>
+</main>
+
+<footer>
+<p>Freelance HelpWorld AI © 2026</p>
+<p>Global Freelancing • AI Assistance • Opportunities</p>
+</footer>
+
+<script>
+let account=null;
+let userCount=0;
+let adCount=0;
+
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function register(){
+let name=document.getElementById('regname').value.trim();
+let email=document.getElementById('regemail').value.trim();
+let pass=document.getElementById('regpass').value;
+let role=document.getElementById('regrole').value;
+if(!name||!email||!pass){
+document.getElementById('regmsg').textContent='Please complete all fields.';
+return;
+}
+account={name,email,pass,role};
+userCount++;
+document.getElementById('users').textContent=userCount;
+document.getElementById('regmsg').textContent='Demo account created. You can now login.';
+}
+
+function login(){
+let email=document.getElementById('loginemail').value.trim();
+let pass=document.getElementById('loginpass').value;
+if(account && email===account.email && pass===account.pass){
+document.getElementById('welcome').textContent='Welcome, '+account.name;
+document.getElementById('role').textContent=account.role;
+document.getElementById('loginmsg').textContent='Login successful!';
+show('dashboard');
+}else{
+document.getElementById('loginmsg').textContent='Demo account not found. Register first.';
+}
+}
+
+function logout(){
+account=null;
+document.getElementById('welcome').textContent='Please login to view your demo account.';
+document.getElementById('role').textContent='Guest';
+show('home');
+}
+
+function submitAd(){
+let name=document.getElementById('adname').value.trim();
+let email=document.getElementById('ademail').value.trim();
+let details=document.getElementById('adtext').value.trim();
+if(!name||!email||!details){
+document.getElementById('admsg').textContent='Please complete the required fields.';
+return;
+}
+adCount++;
+document.getElementById('ads').textContent=adCount;
+document.getElementById('admsg').textContent='Demo request received on this device.';
+}
+
+function searchJobs(){
+let q=document.getElementById('jobsearch').value.toLowerCase();
+document.querySelectorAll('#jobresults p').forEach(p=>{
+p.style.display=p.textContent.toLowerCase().includes(q)?'block':'none';
+});
+}
+</script>
+</body>
+</html>
