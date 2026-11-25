@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: freelance-helpworld-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_NAME
+        value: Freelance HelpWorld AI
+      - key: ACCESS_TOKEN_MINUTES
+        value: "30"
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
