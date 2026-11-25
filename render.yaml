@@ -1,0 +1,25 @@
+databases:
+  - name: freelance-helpworld-ai-db
+    databaseName: freelance_helpworld_ai
+    plan: free
+
+services:
+  - type: web
+    name: freelance-helpworld-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_NAME
+        value: freelance-helpworld-ai
+      - key: ACCESS_TOKEN_MINUTES
+        value: "30"
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: freelance-helpworld-ai-db
+          property: connectionString
