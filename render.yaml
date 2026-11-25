@@ -1,3 +1,8 @@
+databases:
+  - name: freelance-helpworld-ai-db
+    databaseName: freelance_helpworld_ai
+    plan: free
+
 services:
   - type: web
     name: freelance-helpworld-ai
@@ -9,10 +14,12 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_NAME
-        value: Freelance HelpWorld AI
+        value: freelance-helpworld-ai
       - key: ACCESS_TOKEN_MINUTES
         value: "30"
       - key: JWT_SECRET_KEY
-        sync: false
+        generateValue: true
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: freelance-helpworld-ai-db
+          property: connectionString
